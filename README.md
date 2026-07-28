@@ -2,11 +2,6 @@
 
 An interactive Movie Recommendation System built using **Python**, **Machine Learning**, and **Flask**. The model suggests similar movies based on content-based filtering using cosine similarity.
 
-## 👨‍💻 Author
-
-**Rishiraj Singh**
-* GitHub: [@RishirajDeveloper](https://github.com/RishirajDeveloper)
-
 ---
 
 ## 🛠️ Tech Stack & Tools
@@ -38,3 +33,10 @@ RJS-movies-recommender/
 ├── static/                     # CSS / JS static assets
 ├── requirements.txt            # Project dependencies
 └── .gitignore                  # Git ignore rules
+
+
+## 👨‍💻 Author
+
+**Rishiraj Singh**
+* GitHub: [@RishirajDeveloper](https://github.com/RishirajDeveloper)
+
