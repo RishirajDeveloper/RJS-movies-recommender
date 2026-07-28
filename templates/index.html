@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RJS Movie Recommender</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link class="rounded-full" rel="icon" type="image/x-icon" href="static/rishirajlogo1.ico">
+    <style>
+        /* Premium Immersive Dark Background Blur */
+        body {
+            background: radial-gradient(circle at center, #0000005b -60%, #121314 80%);
+            background-attachment: fixed;
+        }
+
+        /* Blazing Fire/Metallic Text Gradient for RISHIRAJ */
+        .name-gradient {
+            background: linear-gradient(to right, #ff2a2a, #ff7a00, #ffb800);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body class="bg-[#0f1116] text-white font-sans min-h-screen flex flex-col justify-between">
+
+    <div class="flex-grow pb-12">
+        <div class="max-w-7xl mx-auto pt-10 px-4 text-center">
+            <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-2">
+                🎬 RJS Movie Recommender System
+            </h1>
+            <p class="text-gray-400 text-base md:text-lg">Instantly find your next favorite movie using Content-Based
+                Machine Learning.</p>
+            <div class="h-[1px] bg-gray-800 my-6 md:my-8"></div>
+        </div>
+
+        <div class="max-w-2xl mx-auto px-4 text-center">
+            <label class="block text-gray-300 text-sm font-semibold mb-3 text-left">🔍 Type or select a movie you
+                like:</label>
+
+            <div class="relative w-full text-left">
+                <input list="movie-options" id="movie-select" placeholder="Type to search a movie..."
+                    class="w-full bg-[#1b1f27] text-white border border-gray-700 rounded-lg px-4 py-3 text-base md:text-lg focus:outline-none focus:border-red-600 cursor-pointer">
+
+                <datalist id="movie-options">
+                    {% for movie in movie_list %}
+                    <option value="{{ movie }}"></option>
+                    {% endfor %}
+                </datalist>
+            </div>
+            <button id="recommend-btn"
+                class="w-full mt-5 bg-[#e50914] text-white font-bold text-base md:text-lg py-3 rounded-lg shadow-lg shadow-red-900/40 hover:bg-[#ff1f2a] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer">
+                Recommend Movies
+            </button>
+        </div>
+
+        <div id="spinner" class="hidden text-center mt-10">
+            <div class="inline-block animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-red-600"></div>
+            <p class="text-gray-400 mt-2">Fetching best recommendations for you... 🍿</p>
+        </div>
+
+        <div id="results-container"
+            class="hidden max-w-7xl mx-auto px-4 mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
+        </div>
+    </div>
+
+    <div id="movie-modal"
+        class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-[#14171f] max-w-2xl w-full rounded-2xl overflow-hidden border border-gray-800 shadow-2xl relative flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto md:overflow-visible">
+            <button id="close-modal"
+                class="absolute top-3 right-4 text-gray-400 hover:text-white text-2xl font-bold z-10 cursor-pointer">&times;</button>
+
+            <img id="modal-img" src="" alt=""
+                class="w-full md:w-1/3 object-cover aspect-[2/3] max-h-[40vh] md:max-h-none">
+
+            <div class="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                    <h2 id="modal-title" class="text-xl md:text-2xl font-black text-white mb-3"></h2>
+                    <p id="modal-overview" class="text-gray-400 text-xs md:text-sm mb-4 leading-relaxed"></p>
+                </div>
+                <div class="space-y-1.5 border-t border-gray-800 pt-3 text-xs md:text-sm">
+                    <p><span class="text-gray-500 font-semibold">Genres:</span> <span id="modal-genres"
+                            class="text-gray-300"></span></p>
+                    <p><span class="text-gray-500 font-semibold">Starring:</span> <span id="modal-cast"
+                            class="text-gray-300"></span></p>
+                    <p><span class="text-gray-500 font-semibold">Director:</span> <span id="modal-director"
+                            class="text-gray-300"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer
+        class="w-full bg-[#0b0d12] border-t border-gray-900 px-4 md:px-6 py-4 text-gray-500 flex flex-col md:flex-row items-center justify-between gap-4 mt-auto">
+
+        <div class="flex items-center gap-3">
+            <div
+                class="w-12 h-12 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-red-600 shadow-lg bg-gray-800 shrink-0">
+                <img src="{{ url_for('static', filename='my_image.jpg') }}" alt="RISHIRAJ"
+                    class="w-full h-full object-cover">
+            </div>
+
+            <div class="text-xs md:text-sm font-black tracking-widest uppercase name-gradient">
+                RISHIRAJ SINGH
+            </div>
+        </div>
+
+        <div class="text-center order-last md:order-none">
+            <a href="https://rishiraj-singh.vercel.app" target="_blank"
+                class="text-red-500 hover:text-red-400 font-medium transition-colors text-xs md:text-sm border border-red-600/30 px-4 py-1.5 rounded-full bg-red-950/20 hover:bg-red-950/40 inline-block">
+                🌐 Author's Portfolio
+            </a>
+        </div>
+
+        <div class="flex flex-col items-center md:items-end gap-1 text-center md:text-right">
+            <div class="text-[10px] md:text-xs text-gray-400 font-medium">
+                Made with ❤️ | Powered by ML & TMDB API © 2026
+            </div>
+            <div class="text-[10px] md:text-xs text-gray-400 font-bold">
+                <a href="mailto:rishirajrjs6@gmail.com"
+                    class="hover:text-gray-200 transition-colors bg-green-950/40 px-2 py-0.5 rounded font-bold inline-block">
+                    📧 Email: rishirajrjs6@gmail.com
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentRecommendations = [];
+
+        document.getElementById('recommend-btn').addEventListener('click', async () => {
+            const movieSelected = document.getElementById('movie-select').value;
+            const spinner = document.getElementById('spinner');
+            const resultsContainer = document.getElementById('results-container');
+
+            spinner.classList.remove('hidden');
+            resultsContainer.classList.add('hidden');
+            resultsContainer.innerHTML = '';
+
+            try {
+                const response = await fetch('/recommend', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ movie: movieSelected })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentRecommendations = data;
+
+                    data.names.forEach((name, index) => {
+                        const cardHtml = `
+                            <div onclick="showDetails(${index})" class="bg-[#14171f] rounded-xl overflow-hidden shadow-lg border border-gray-800 transform hover:scale-105 transition-all duration-300 cursor-pointer group">
+                                <div class="relative overflow-hidden">
+                                    <img src="${data.posters[index]}" alt="${name}" class="w-full h-auto object-cover aspect-[2/3]">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                                        <span class="bg-red-600/90 text-white font-bold text-[10px] md:text-xs px-3 py-1.5 rounded-full">View Info ℹ️</span>
+                                    </div>
+                                </div>
+                                <div class="p-3 text-center">
+                                    <h3 class="font-bold text-xs md:text-sm text-gray-200 line-clamp-2 group-hover:text-red-500 transition-colors">${name}</h3>
+                                </div>
+                            </div>
+                        `;
+                        resultsContainer.innerHTML += cardHtml;
+                    });
+                    resultsContainer.classList.remove('hidden');
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Something went wrong!');
+            } finally {
+                spinner.classList.add('hidden');
+            }
+        });
+
+        function showDetails(index) {
+            const modal = document.getElementById('movie-modal');
+            const name = currentRecommendations.names[index];
+            const poster = currentRecommendations.posters[index];
+            const details = currentRecommendations.details[index];
+
+            document.getElementById('modal-title').innerText = name;
+            document.getElementById('modal-img').src = poster;
+            document.getElementById('modal-img').alt = name;
+            document.getElementById('modal-overview').innerText = details.overview || "No overview available.";
+            document.getElementById('modal-genres').innerText = details.genres || "N/A";
+            document.getElementById('modal-cast').innerText = details.cast || "N/A";
+            document.getElementById('modal-director').innerText = details.crew || "N/A";
+
+            modal.classList.remove('hidden');
+        }
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('movie-modal').classList.add('hidden');
+        });
+
+        document.getElementById('movie-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('movie-modal')) {
+                document.getElementById('movie-modal').classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+
+</html>
