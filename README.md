@@ -24,7 +24,7 @@ An interactive Movie Recommendation System built using Python, Machine Learning,
 
 ## 📁 Project Structure
 
-'''text
+```text
 RJS-movies-recommender/
 │
 ├── app.py                       # Main application script
@@ -33,7 +33,7 @@ RJS-movies-recommender/
 ├── static/                      # CSS / JS static assets
 ├── requirements.txt             # Project dependencies
 └── .gitignore                   # Git ignore rules
-
+```
 ---
 
 ## ⚙️ Installation & Setup
@@ -65,5 +65,8 @@ This project is licensed under the MIT License.
 
 ## 👨‍💻 Author
 
-Rishiraj Singh
-GitHub: @RishirajDeveloper (https://github.com/RishirajDeveloper)
+### Rishiraj
+
+* **Gmail:** rishirajrjs6@gmail.com  
+* **GitHub:** [@RishirajDeveloper](https://github.com/RishirajDeveloper)
+* [@PORTFOLIO](https://rishiraj-singh.vercel.app/)
