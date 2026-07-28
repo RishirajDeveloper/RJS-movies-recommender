@@ -1,6 +1,11 @@
-# 🎬 Movie Recommendation System
+# 🎬 Movie Recommendation System 
 
 An interactive Movie Recommendation System built using **Python**, **Machine Learning**, and **Flask**. The model suggests similar movies based on content-based filtering using cosine similarity.
+
+## 👨‍💻 Author
+
+**Rishiraj Singh**
+* GitHub: [@RishirajDeveloper](https://github.com/RishirajDeveloper)
 
 ---
 
