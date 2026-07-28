@@ -24,6 +24,7 @@ An interactive Movie Recommendation System built using Python, Machine Learning,
 
 ## 📁 Project Structure
 
+'''text
 RJS-movies-recommender/
 │
 ├── app.py                       # Main application script
