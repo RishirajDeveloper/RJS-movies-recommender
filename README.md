@@ -33,7 +33,7 @@ RJS-movies-recommender/
 ├── static/                     # CSS / JS static assets
 ├── requirements.txt            # Project dependencies
 └── .gitignore                  # Git ignore rules
-
+---
 
 ## 👨‍💻 Author
 
